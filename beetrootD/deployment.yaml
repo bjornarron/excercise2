@@ -5,17 +5,10 @@ metadata:
   labels:
     app: beetroot
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: beetroot
-  template:
-    metadata:
-      labels:
-        app: beetroor
-    spec:
-      containers:
-      - name: beetroot
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+  containers:
+    - name: beetroot
+      image: https://github.com/bjornarron/excercise2/Dockerfile
+      ports:
+      - port: 80
+        targetPort: 80
+        nodePort: 30007
