@@ -5,6 +5,10 @@ metadata:
   labels:
     app: beetroot
 spec:
+  selector:
+    matchlabels:
+      app: beetroot
+      version: v1
   template:
     metadata:
       labels:
