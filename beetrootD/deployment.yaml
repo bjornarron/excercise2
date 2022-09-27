@@ -18,5 +18,4 @@ spec:
       - name: beetroot
         image: ghcr.io/bjornarron/excercise2:latest
         ports:
-        - nodePort: 30007
-          port: 8080
+        - containerPort: 30007
