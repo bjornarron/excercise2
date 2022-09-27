@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: beetroot
-      image: https://github.com/bjornarron/excercise2/Dockerfile
+      image: ghcr.io/bjornarron/excercise2:latest
       ports:
       - port: 80
         targetPort: 80
