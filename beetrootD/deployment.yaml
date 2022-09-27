@@ -1,15 +1,14 @@
-  ---
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: beetroot-deployment
-    labels:
-      app: beetroot
-  spec:
-    containers:
-      - name: beetroot
-        image: ghcr.io/bjornarron/excercise2:latest
-        ports:
-          - port: 80
-            targetPort: 80
-            nodePort: 30007
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beetroot-deployment
+  labels:
+    app: beetroot
+spec:
+  containers:
+    - name: beetroot
+      image: ghcr.io/bjornarron/excercise2:latest
+      ports:
+        - port: 80
+          targetPort: 80
+          nodePort: 30007
