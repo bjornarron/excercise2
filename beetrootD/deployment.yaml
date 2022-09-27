@@ -6,9 +6,9 @@ metadata:
     app: beetroot
 spec:
   containers:
-    - name: beetroot
-      image: ghcr.io/bjornarron/excercise2:latest
-      ports:
-        - port: 80
-          targetPort: 80
-          nodePort: 30007
+  - name: beetroot
+    image: ghcr.io/bjornarron/excercise2:latest
+    ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30007
