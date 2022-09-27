@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,4 +19,4 @@ spec:
       - name: beetroot
         image: ghcr.io/bjornarron/excercise2:latest
         ports:
-        - containerPort: 30007
+        - containerPort: 8080
