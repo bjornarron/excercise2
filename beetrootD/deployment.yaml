@@ -20,3 +20,16 @@ spec:
         image: ghcr.io/bjornarron/excercise2:latest
         ports:
         - containerPort: 8080
+---
+kind: Service
+metadata: 
+  name: exposing-nodeport
+spec:
+  type: NodePort
+  selector: 
+    app.kubernetes.io/name: beetroot
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30007
+    
