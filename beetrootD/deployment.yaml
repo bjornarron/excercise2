@@ -5,10 +5,20 @@ metadata:
   labels:
     app: beetroot
 spec:
-  containers:
-  - name: beetroot
-    image: "ghcr.io/bjornarron/excercise2:latest"
-    ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 30007
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beetroot
+  template:
+    metadata:
+      labels:
+        app: beetroot
+    spec:
+      containers:
+      - name: beetroot
+        image: ghcr.io/bjornarron/excercise2:latest
+        ports:
+        - containerPort: 80
+          port: 80
+          targetPort: 80
+          nodePort: 3000
