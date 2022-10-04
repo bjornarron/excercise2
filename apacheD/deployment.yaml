@@ -46,7 +46,22 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: reverse-proxy-apache
+  name: exposing-clusterip
+spec:
+  type: ClusterIP
+  clusterIp: 123.123.123.123
+  selector: 
+    app.kubernetes.io/name: beetroot-deployment
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: exposing-apache
 spec:
   type: NodePort
   selector: 
@@ -55,3 +70,4 @@ spec:
     - port: 8080
       targetPort: 8080
       nodePort: 30080
+
