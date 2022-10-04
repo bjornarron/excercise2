@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: apache
-        image: Apache:2.4
+        image: httpd:latest
         ports:
         - containerPort: 8080
 ---
