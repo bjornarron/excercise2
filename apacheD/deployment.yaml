@@ -46,7 +46,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: exposing-nodeport
+  name: reverse-proxy-apache
 spec:
   type: NodePort
   selector: 
