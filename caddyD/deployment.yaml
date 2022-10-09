@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: beetroot-deployment
+  name: beetroot
   labels:
     app: beetroot
 spec:
@@ -21,14 +21,66 @@ spec:
         ports:
         - containerPort: 8080
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caddy
+  labels:
+    app: caddy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caddy
+  template:
+    metadata:
+      labels:
+        app: caddy
+    spec:
+      containers:
+      - name: caddy
+        image: caddy:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: caddyfile
+          mountPath: /etc/caddy2/caddyfile
+      volumes:
+      - name: caddyfile
+        configMap:
+          name: caddyfile
+---
 apiVersion: v1
 kind: Service
-metadata:
-  name: caddy-reverse-proxy
+metadata: 
+  name: beetroot-service
 spec:
-  selector:
+  type: ClusterIP
+  selector: 
     app: beetroot
   ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
+    - name: http
+      port: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: exposing-caddy
+spec:
+  type: NodePort
+  selector: 
+    name: caddy
+  ports:
+    - port: 8080
+      nodePort: 30080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caddyfile
+data:
+  caddyfile: |
+    exposing-caddy:8080 {
+        reverse_proxy :30080
+    }
