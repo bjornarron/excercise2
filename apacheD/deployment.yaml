@@ -43,12 +43,15 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: httpd-conf
-          mountPath: /etc/apache2/conf/httpd-conf
+        - name: config
+          mountPath: /usr/local/apache2/conf
       volumes:
-      - name: httpd-conf
+      - name: config
         configMap:
-          name: httpd-conf
+          name: config
+          items:
+            - key: config
+              path: httpd.conf
 ---
 apiVersion: v1
 kind: Service
@@ -58,7 +61,7 @@ spec:
   type: ClusterIP
   clusterIP: 10.107.240.24
   selector: 
-    name: beetroot
+    app: beetroot
   ports:
     - name: http
       port: 8080
@@ -79,11 +82,13 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: httpd-conf
+  name: config
 data:
-  httpd-conf: |
+  config: |
+    LoadModule proxy_module modules/mod_proxy.so
+    LoadModule proxy_module modules/mod_proxy_http.so
     <VirtualHost *:80>
       ProxyPreserveHost On
-
-      ProxyPass / 10.107.240.24:8080/
+      ProxyPass / http://10.107.240.24:8080/
     </VirtualHost>
+    LoadModule mpm_event_module modules/mod_mpm_event.so
