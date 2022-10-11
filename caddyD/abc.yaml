@@ -21,16 +21,6 @@ spec:
         ports:
         - containerPort: 8080
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: default
-data:
-  default: |
-    :80 {
-      reverse_proxy / http://10.107.240.25:8080
-    }
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,21 +40,9 @@ spec:
       containers:
       - name: caddy
         image: caddy:2.6.1-alpine
+        command: ["caddy reverse-proxy --from :80 --to 10.107.240.25:8080"]
         ports:
         - containerPort: 80
-        #command: ["/bin/sh/srv"]
-        #args: ["caddy reverse-proxy --from :80 --to 10.107.240.25:8080"]
-        volumeMounts:
-        - mountPath: /etc/caddy
-          name: default
-      volumes:
-      - name: default
-        configMap:
-          name: default
-          items:
-          - key: default
-            path: Caddyfile
-        
 ---
 apiVersion: v1
 kind: Service
